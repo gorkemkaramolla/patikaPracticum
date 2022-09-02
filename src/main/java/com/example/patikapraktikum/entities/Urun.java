@@ -1,16 +1,10 @@
 package com.example.patikapraktikum.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 
 public class Urun {
     @Id
@@ -18,8 +12,9 @@ public class Urun {
     private Long id;
     private String adi;
     private Double fiyat;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date skt;
+    @Temporal(TemporalType.DATE)
+    @Column()
+    private Date sktDate;
     @OneToMany(mappedBy = "urun")
     Set<UrunYorum> yorumlar = new HashSet<>();
 
@@ -36,7 +31,7 @@ public class Urun {
                 "id=" + id +
                 ", adi='" + adi + '\'' +
                 ", fiyat=" + fiyat +
-                ", skt=" + skt +
+                ", skt=" + sktDate +
                 ", yorumlar=" + yorumlar +
                 '}';
     }
@@ -51,7 +46,7 @@ public class Urun {
         if (id != null ? !id.equals(urun.id) : urun.id != null) return false;
         if (adi != null ? !adi.equals(urun.adi) : urun.adi != null) return false;
         if (fiyat != null ? !fiyat.equals(urun.fiyat) : urun.fiyat != null) return false;
-        if (skt != null ? !skt.equals(urun.skt) : urun.skt != null) return false;
+        if (sktDate != null ? !sktDate.equals(urun.sktDate) : urun.sktDate != null) return false;
         return yorumlar != null ? yorumlar.equals(urun.yorumlar) : urun.yorumlar == null;
     }
 
@@ -60,7 +55,7 @@ public class Urun {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (adi != null ? adi.hashCode() : 0);
         result = 31 * result + (fiyat != null ? fiyat.hashCode() : 0);
-        result = 31 * result + (skt != null ? skt.hashCode() : 0);
+        result = 31 * result + (sktDate != null ? sktDate.hashCode() : 0);
         result = 31 * result + (yorumlar != null ? yorumlar.hashCode() : 0);
         return result;
     }
@@ -89,12 +84,12 @@ public class Urun {
         this.fiyat = fiyat;
     }
 
-    public Date getSkt() {
-        return skt;
+    public Date getSktDate() {
+        return sktDate;
     }
 
-    public void setSkt(Date skt) {
-        this.skt = skt;
+    public void setSktDate(Date skt) {
+        this.sktDate = skt;
     }
 
     public Set<UrunYorum> getYorumlar() {
