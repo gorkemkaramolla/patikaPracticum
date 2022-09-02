@@ -15,7 +15,7 @@ public class UrunResponse {
         this.id = urun.getId();
         this.adi = urun.getAdi();
         this.fiyat = urun.getFiyat();
-        this.skt = urun.getSkt();
+        this.skt = urun.getSktDate();
     }
 
     public Long getId() {

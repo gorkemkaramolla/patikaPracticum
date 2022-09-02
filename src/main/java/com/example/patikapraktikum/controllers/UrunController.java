@@ -1,11 +1,7 @@
 package com.example.patikapraktikum.controllers;
-
-import com.example.patikapraktikum.dto.UrunResponse;
 import com.example.patikapraktikum.entities.Urun;
 import com.example.patikapraktikum.service.UrunService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -16,11 +12,14 @@ public class UrunController {
     public UrunController(UrunService urunService) {
         this.urunService = urunService;
     }
-
-    @GetMapping()
-    List<Urun> getSktGecmisUrunler(@RequestParam Date date)
+    @GetMapping("/sktgecmisurunler")
+    List<Urun> getSktGecmisUrunler() {
+        return urunService.sktGecmisUrunler();
+    }
+    @GetMapping("/sktgecmemisurunler")
+    List<Urun> getSktGecmemisUrunler()
     {
-        return urunService.sktGecmisUrunler(date);
+        return urunService.sktGecmemisUrunler();
     }
     @PostMapping()
     public Urun postUrun(@RequestBody Urun urun)
