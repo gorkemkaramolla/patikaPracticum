@@ -1,11 +1,11 @@
 package com.example.patikapraktikum.service;
 
 import com.example.patikapraktikum.dto.UrunYorumResponse;
-import com.example.patikapraktikum.entities.Urun;
 import com.example.patikapraktikum.entities.UrunYorum;
 import com.example.patikapraktikum.repos.UrunYorumRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,22 +19,29 @@ public class UrunYorumService {
     private final UrunYorumRepo urunYorumRepo;
 
     private final KullaniciService kullaniciService;
-    public List<UrunYorumResponse> getCommentsByUrunId(Optional<Long> urunId, Optional<Long> kullaniciId)
+    public List<UrunYorumResponse> getCommentsByUrunId(Long urunId)
     {
 
-        if(kullaniciId.isPresent())
-        {
-            List<UrunYorum> kullaniciYorumlar = urunYorumRepo.findByKullaniciId(kullaniciId.get());
-            return kullaniciYorumlar.stream().map(UrunYorumResponse::new).collect(Collectors.toList());
-        } else if (urunId.isPresent()) {
-            List<UrunYorum> urunYorumlar =urunYorumRepo.findByUrunId(urunId.get());
-            return urunYorumlar.stream().map(UrunYorumResponse::new).collect(Collectors.toList());
-        }
-        else {
-           return urunYorumRepo.findAll().stream().map(UrunYorumResponse::new).collect(Collectors.toList());
-        }
+        List<UrunYorum> urunYorumlar =urunYorumRepo.findByUrunId(urunId);
+        return urunYorumlar.stream().map(UrunYorumResponse::new).collect(Collectors.toList());
+
+
+    }
+    public List<UrunYorumResponse> getCommentsByKullaniciId(Long kullaniciId)
+    {
+        List<UrunYorum> urunYorumlar =urunYorumRepo.findByKullaniciId(kullaniciId);
+        return urunYorumlar.stream().map(UrunYorumResponse::new).collect(Collectors.toList());
+
 
     }
 
 
+    public List<UrunYorumResponse> getUrunCommentsInTimeRange(Long urunId,Date startDate, Date endDate) {
+
+        return urunYorumRepo.findByDateCreatedBetweenAndKullaniciId(startDate,endDate,urunId).stream().map(UrunYorumResponse::new).collect(Collectors.toList());
+    }
+    public List<UrunYorumResponse> getKullaniciCommentsInTimeRange(Long kullaniciId,Date startDate, Date endDate) {
+
+        return urunYorumRepo.findByDateCreatedBetweenAndKullaniciId(startDate,endDate,kullaniciId).stream().map(UrunYorumResponse::new).collect(Collectors.toList());
+    }
 }
