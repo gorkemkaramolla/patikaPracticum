@@ -17,7 +17,7 @@ public class UrunYorum {
     @Column(length = 500)
     private String yorum;
     @DateTimeFormat(pattern="dd/MM/yyyy")
-    private Date dateCreated;
+    private Date dateCreated = new Date(System.currentTimeMillis());
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kullanici_id")
@@ -25,7 +25,7 @@ public class UrunYorum {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "urun_id")
-    private Kullanici urun;
+    private Urun urun;
 
 
 
@@ -101,11 +101,11 @@ public class UrunYorum {
         this.kullanici = kullanici;
     }
 
-    public Kullanici getUrun() {
+    public Urun getUrun() {
         return urun;
     }
 
-    public void setUrun(Kullanici urun) {
+    public void setUrun(Urun urun) {
         this.urun = urun;
     }
 }
