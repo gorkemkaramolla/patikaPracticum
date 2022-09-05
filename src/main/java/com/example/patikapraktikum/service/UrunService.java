@@ -13,7 +13,12 @@ public class UrunService {
         this.urunRepo = urunRepo;
     }
 
+    public Urun  getUrunById(Long id)
+    {
 
+        return urunRepo.findById(id).orElse(null);
+    }
+    //Son kullanma tarihi geçmiş ürünleri listeleyen metot
     public List<Urun> sktGecmisUrunler()  {
 
         Date todaysDate = new Date(System.currentTimeMillis());
@@ -21,7 +26,7 @@ public class UrunService {
         return urunRepo.findBySktDateBefore(new java.sql.Date(todaysDate.getTime()));
 
     }
-
+    //Son kullanma tarihi geçmemiş ürünler ve son kullanma tarihi boş olan ürünleri getiren metot
     public List<Urun> sktGecmemisUrunler()  {
 
         Date todaysDate = new Date(System.currentTimeMillis());
@@ -29,7 +34,7 @@ public class UrunService {
         return urunRepo.findBySktDateAfterOrSktDateNull(new java.sql.Date(todaysDate.getTime()));
 
     }
-
+    //Ürün eklemek için oluşturulumş metot
     public Urun postUrun(Urun urun) {
         return urunRepo.save(urun);
     }

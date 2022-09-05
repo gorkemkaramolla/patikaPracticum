@@ -1,5 +1,7 @@
 package com.example.patikapraktikum.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -13,6 +15,7 @@ public class Urun {
     private String adi;
     private Double fiyat;
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern="dd/MM/yyyy")
     @Column()
     private Date sktDate;
     @OneToMany(mappedBy = "urun")
@@ -32,7 +35,6 @@ public class Urun {
                 ", adi='" + adi + '\'' +
                 ", fiyat=" + fiyat +
                 ", skt=" + sktDate +
-                ", yorumlar=" + yorumlar +
                 '}';
     }
 
